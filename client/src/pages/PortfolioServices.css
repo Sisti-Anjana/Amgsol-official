@@ -1,0 +1,133 @@
+.portfolio-container {
+  display: flex;
+  min-height: 80vh;
+  margin-top: 70px; /* Below navbar */
+  gap: 20px;
+}
+
+/* Sidebar (Left Box) */
+.portfolio-sidebar {
+  width: 20%;
+  background: linear-gradient(180deg, #0f5132, #198754, #b7f0cb);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Heading */
+.portfolio-heading {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 20px;
+}
+
+/* Service List */
+.portfolio-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.portfolio-menu li {
+  padding: 12px;
+  margin: 10px 0;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 500;
+  color: #134c2d;
+  transition: 0.3s ease;
+  border: 1px solid #e0e0e0;
+}
+
+.portfolio-menu li:hover {
+  background: #9fe2b5;
+  color: #0f5132;
+  font-weight: 600;
+}
+
+/* Bottom Buttons */
+.portfolio-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.portfolio-bottom button {
+  width: 90%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #0f5132;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.portfolio-bottom button:hover {
+  background: #0c3b25;
+}
+
+/* Content Area (Right Side) */
+.portfolio-content {
+  flex: 1;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  font-size: 17px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Accordion */
+.accordion {
+  margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.accordion-item {
+  border: 1px solid #ddd;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  background: #f8fdf9;
+}
+
+.accordion-header {
+  padding: 14px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #e9f7ef;
+  transition: background 0.3s ease;
+}
+
+.accordion-header:hover {
+  background: #d0f0da;
+}
+
+.accordion-content {
+  padding: 14px 18px;
+  background: white;
+  font-size: 15px;
+  color: #333;
+  border-top: 1px solid #ddd;
+}
+
+.accordion-item.active .accordion-header {
+  background: #b7f0cb;
+}

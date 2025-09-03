@@ -1,0 +1,34 @@
+.message-ceo {
+  padding: 60px 20px;
+  max-width: 900px;
+  margin: auto;
+  line-height: 1.7;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.message-ceo h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 25px;
+  color: #1a4d2e;
+}
+
+.ceo-content {
+  background: #f8fdf9;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.ceo-content p {
+  margin-bottom: 18px;
+  font-size: 1.05rem;
+  color: #333;
+}
+
+.ceo-content h4 {
+  text-align: right;
+  margin-top: 25px;
+  font-weight: bold;
+  color: #1a4d2e;
+}
