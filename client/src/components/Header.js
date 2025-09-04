@@ -71,8 +71,8 @@ const Header = () => {
               </ul>
             )}
           </li>
-          <li><NavLink to="/career">Career</NavLink></li>
-          <li><NavLink to="/insights">Insights</NavLink></li>
+          <li><NavLink to="/career">Careers</NavLink></li>
+          <li><NavLink to="/insights">Insights & Blogs</NavLink></li>
           <li><NavLink to="/contact">Contact</NavLink></li>
         </ul>
       </nav>

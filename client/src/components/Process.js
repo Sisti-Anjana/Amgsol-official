@@ -60,7 +60,7 @@ const Process = () => {
             <div className="process-card-inner">
               <FontAwesomeIcon icon={faTools} className="icon-logo" />
               <div>
-                <h4>Root Cause Analyses and Permanent Fixes</h4>
+                <h4>Root Cause Analysis and Permanent Fixes</h4>
                 <p>
                   Conducting thorough root cause analyses and implementing permanent
                   fixes, we strive for continual improvement, resilience, and reliability

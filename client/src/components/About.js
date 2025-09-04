@@ -33,20 +33,13 @@ const About = () => {
                 <div className="content-text">
                   <h2>Message from President</h2>
                   <p>
-                    Welcome to American Green Solutions! As the President, I extend a warm greeting, emphasizing our commitment
-                    to revolutionizing the solar energy landscape through unwavering excellence and innovative solutions.
-                    Recognizing the pivotal role of solar monitoring in optimizing energy performance, we proudly offer
-                    top-tier solutions.
+                    American Green Solutions strongly values the clarity of vision and precision in decision-making to drive progress. We remain committed to embodying the rich spirit of America's diversity by seamlessly integrating the best from all corners of the world. Our workplace and workforce are dedicated to reflecting the authentic American spirit in everything we undertake and accomplish.
                   </p>
                   <p>
-                    Our promise is to ensure your solar power system operates at peak efficiency, achieved through cutting-edge
-                    technology. What truly differentiates us is our dedicated focus on delivering exceptional customer service.
-                    This commitment is deeply rooted in our values, with our team actively being responsive, transparent, and
-                    proactive to meet your needs, making your satisfaction our top priority.
+                    Within our ranks, we are privileged to have the best talents from across the globe, each flourishing and contributing to their utmost potential, propelling AGS to new heights. The leadership at American Green Solutions LLC adopts an unwavering pro-growth approach, fostering positive development for employees, clients, associates, and shareholders alike.
                   </p>
                   <p>
-                    Choosing American Green Solutions is more than acquiring solar monitoring solutions; it symbolizes
-                    establishing a partnership with a team passionate about sustainable energy and dedicated to your success.
+                    On behalf of the entire American Green Solutions LLC. team, I extend heartfelt gratitude to our valued customers, trusted vendors, dedicated employees, and supportive well-wishers. Your perennial support and guidance have played a crucial role in making us a top choice for associations. Thank you for being an integral part of our success story.
                   </p>
                   <h4>— President, American Green Solutions</h4>
                 </div>
@@ -59,18 +52,16 @@ const About = () => {
                 <div className="content-text">
                   <h2>Message from CEO</h2>
                   <p>
-                    As the CEO of American Green Solutions, I am thrilled to lead a team dedicated to pioneering sustainable
-                    energy innovations. Our focus on advanced solar monitoring technology ensures that every client benefits
-                    from maximum efficiency and reliability, setting new industry standards.
+                    Welcome to American Green Solutions! As the CEO, I extend a warm greeting, emphasizing our commitment to revolutionizing the solar energy landscape through unwavering excellence and innovative solutions. Recognizing the pivotal role of solar monitoring in optimizing energy performance, we proudly offer top-tier solutions.
                   </p>
                   <p>
-                    We prioritize building long-term relationships with our clients, offering tailored support and cutting-edge
-                    solutions that align with their goals. Our commitment to environmental stewardship drives us to integrate
-                    green practices into every aspect of our work, creating a legacy of sustainability for future generations.
+                    Our promise is to ensure your solar power system operates at peak efficiency, achieved through cutting-edge technology. What truly differentiates us is our dedicated focus on delivering exceptional customer service. This commitment is deeply rooted in our values, with our team actively being responsive, transparent, and proactive to meet your needs, making your satisfaction our top priority.
                   </p>
                   <p>
-                    Join us on this journey as we power a brighter, greener future together, with a team that values integrity,
-                    innovation, and excellence above all.
+                    Choosing American Green Solutions is more than acquiring solar monitoring solutions; it symbolizes establishing a partnership with a team passionate about sustainable energy and dedicated to your success. Together, let's unlock the full potential of your solar power system for a greener, more sustainable future. We express sincere gratitude for considering American Green Solutions as your trusted partner.
+                  </p>
+                  <p>
+                    Warm regards, and thank you for providing us with the opportunity to serve you with dedication and expertise, advancing your sustainable energy goals. With a proven history of successful collaborations, American Green Solutions is ready to guide you towards a brighter, cleaner, and more sustainable energy future.
                   </p>
                   <h4>— CEO, American Green Solutions</h4>
                 </div>

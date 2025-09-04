@@ -2,6 +2,9 @@ import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaHome, FaBuilding, FaIndustry } from "react-icons/fa";
+import service1 from '../assets/service1.jpg';
+import service2 from '../assets/service2.jpg';
+import service3 from '../assets/service3.jpg';
 import "./Services.css";
 
 const Services = () => {
@@ -72,11 +75,16 @@ const Services = () => {
               initial={{ scale: 0.9 }}
               whileHover={{ scale: 1.05 }}
             >
+              <div className="service-image">
+                <img src={service1} alt="Residential Services" />
+                <div className="service-overlay">
+                  <FaHome className="icon" />
+                </div>
+              </div>
               <NavLink
                 to="/services/residential"
                 style={{ textDecoration: "none", color: "inherit" }}
               >
-                <FaHome className="icon" />
                 <h4>Residential</h4>
               </NavLink>
             </motion.div>
@@ -86,11 +94,16 @@ const Services = () => {
               initial={{ scale: 0.9 }}
               whileHover={{ scale: 1.05 }}
             >
+              <div className="service-image">
+                <img src={service2} alt="Commercial Services" />
+                <div className="service-overlay">
+                  <FaBuilding className="icon" />
+                </div>
+              </div>
               <NavLink
                 to="/services/commercial"
                 style={{ textDecoration: "none", color: "inherit" }}
               >
-                <FaBuilding className="icon" />
                 <h4>Commercial</h4>
               </NavLink>
             </motion.div>
@@ -100,11 +113,16 @@ const Services = () => {
               initial={{ scale: 0.9 }}
               whileHover={{ scale: 1.05 }}
             >
+              <div className="service-image">
+                <img src={service3} alt="Industrial Services" />
+                <div className="service-overlay">
+                  <FaIndustry className="icon" />
+                </div>
+              </div>
               <NavLink
                 to="/services/industrial"
                 style={{ textDecoration: "none", color: "inherit" }}
               >
-                <FaIndustry className="icon" />
                 <h4>Industrial</h4>
               </NavLink>
             </motion.div>

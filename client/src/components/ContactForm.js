@@ -48,20 +48,29 @@ const ContactForm = () => {
       setErrors(validationErrors);
       return;
     }
+
     const submissionData = {
       ...formData,
       date: new Date().toISOString(),
     };
+
     try {
-      await axios.post('http://localhost:5000/api/contact', submissionData);
-      await axios.post('http://localhost:5000/api/send-email', {
-        to: 'your-email@example.com', // Replace with your actual email
-        subject: `New Quote Request - ${formData.name}`,
-        body: `A new quote request has been submitted:\n\n${Object.entries(submissionData)
-          .map(([key, value]) => `${key}: ${value}`)
-          .join('\n')}`,
+      // Submit contact form to the enhanced endpoint
+      const response = await fetch('http://localhost:3001/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submissionData),
       });
-      setStatus('Message sent successfully!');
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to submit contact form');
+      }
+
+      setStatus('✅ Message sent successfully! We will contact you within 24 hours.');
       setFormData({
         name: '',
         email: '',
@@ -72,8 +81,16 @@ const ContactForm = () => {
         description: ''
       });
       setErrors({});
+
+      // Clear success message after 5 seconds
+      setTimeout(() => setStatus(''), 5000);
+
     } catch (error) {
-      setStatus('Error sending message. Please try again.');
+      console.error('Contact form submission error:', error);
+      setStatus(`❌ Error sending message: ${error.message}. Please try again.`);
+      
+      // Clear error message after 5 seconds
+      setTimeout(() => setStatus(''), 5000);
     }
   };
 

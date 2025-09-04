@@ -11,18 +11,21 @@ const Hero = () => {
   const slides = [
     {
       image: solar3,
-      heading: 'Optimize Solar Performance with Real-Time Monitoring',
-      text: 'Leverage our advanced solar monitoring tools to track performance, detect issues, and maximize energy output.',
+      heading: 'Optimize Solar Performance with Advanced Analytics',
+      text: 'Join 1000+ satisfied customers maximizing their solar plant efficiency with our comprehensive monitoring and analysis solutions.',
+      cta: 'Get Analysis'
     },
     {
       image: solar1,
-      heading: 'Drive Sustainability with Green Solutions',
-      text: 'Partner with American Green Solutions to reduce your carbon footprint and achieve sustainable energy goals.',
+      heading: 'Real-Time Solar Plant Monitoring',
+      text: 'Professional solar performance analysis, predictive maintenance insights, and comprehensive reporting for optimal operations.',
+      cta: 'Learn More'
     },
     {
       image: solar4,
-      heading: 'Empower Your Business with Digital Innovation',
-      text: 'Our cutting-edge digital solutions streamline solar operations, reduce costs, and enhance efficiency.',
+      heading: '50MW+ Solar Plants Analyzed',
+      text: 'Proven expertise in solar performance optimization. Advanced monitoring, data analytics, and operational excellence.',
+      cta: 'See Our Work'
     },
   ];
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -58,20 +61,37 @@ const Hero = () => {
         </div>
       </div>
 
-      <motion.img
-        src={image}
-        alt="American Green Solutions Logo"
-        className="hero-logo"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      />
-
-      <h1>{slides[currentSlide].heading}</h1>
-      <p>{slides[currentSlide].text}</p>
-      <Link to="/contact">
-        <button className="cta-button">Get a Quote</button>
-      </Link>
+      <div className="hero-content">
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          {slides[currentSlide].heading}
+        </motion.h1>
+        
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
+          {slides[currentSlide].text}
+        </motion.p>
+        
+        <motion.div 
+          className="hero-buttons"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+        >
+          <Link to="/contact">
+            <button className="cta-button primary">{slides[currentSlide].cta}</button>
+          </Link>
+          <Link to="/insights">
+            <button className="cta-button secondary">Learn More</button>
+          </Link>
+        </motion.div>
+      </div>
     </motion.section>
   );
 };

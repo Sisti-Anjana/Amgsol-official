@@ -3,9 +3,9 @@ import { motion } from 'framer-motion';
 import './Testimonials.css';
 
 // Import images (place them inside src/assets/testimonials/)
-import brettImg from '../assets/per1.jpg';
-import nickImg from '../assets/pers2.jpg';
-import michaelImg from '../assets/pers3.jpg';
+import brettImg from '../assets/Brett c.jpg';
+import nickImg from '../assets/Nick manna.jpg';
+import michaelImg from '../assets/Michael dufault.jpg';
 
 const testimonials = [
   {

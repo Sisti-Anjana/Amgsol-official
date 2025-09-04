@@ -13,6 +13,8 @@ const Career = () => {
     location: "",
     jobTitle: "",
   });
+  const [resumeFile, setResumeFile] = useState(null);
+  const [fileError, setFileError] = useState("");
   const [showLearnMore, setShowLearnMore] = useState({});
 
   // Job data
@@ -32,13 +34,13 @@ const Career = () => {
     },
     {
       id: 2,
-      title: "Associate Solar Analyst",
+      title: " Solar Technical Analyst",
       location: "Hyderabad",
       department: "Analysis",
       type: "Full-Time",
       qualifications: "BE/B.Tech (Electrical/Electronics/equivalent)",
       communication: "Fluent in English",
-      experience: "Fresher",
+      experience: "1+ years of experience",
       shifts: "Rotational Shifts",
       description: "Analyze solar market trends, perform feasibility studies, and support business development with data-driven insights. Perfect opportunity for fresh graduates to enter the renewable energy sector.",
       learnMore: "This position includes market research, predictive modeling, and presentations to stakeholders. You’ll gain exposure to industry-leading software and have opportunities for international project involvement."
@@ -69,34 +71,95 @@ const Career = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  // Handle resume file change
+  const handleResumeChange = (e) => {
+    const file = e.target.files[0];
+    setFileError("");
+    
+    if (file) {
+      // Validate file type
+      const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      if (!allowedTypes.includes(file.type)) {
+        setFileError("Only PDF, DOC, and DOCX files are allowed");
+        setResumeFile(null);
+        e.target.value = "";
+        return;
+      }
+      
+      // Validate file size (5MB limit)
+      const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+      if (file.size > maxSize) {
+        setFileError("File size must be less than 5MB");
+        setResumeFile(null);
+        e.target.value = "";
+        return;
+      }
+      
+      setResumeFile(file);
+    }
+  };
+
   // Handle form submission and send email notification
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const dataToSave = { ...formData, timestamp: new Date().toISOString() };
-
-    // Attempt to send email notification to anjanas@amgsol.com
+    
     try {
-      const response = await fetch('http://localhost:3001/api/send-application-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          to: 'anjanas@amgsol.com',
-          subject: `New Job Application for ${formData.jobTitle}`,
-          body: `A new application has been submitted:\n\nName: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nExperience: ${formData.experience}\nLocation: ${formData.location}\nJob Title: ${formData.jobTitle}\nTimestamp: ${dataToSave.timestamp}`,
-        }),
+      // Create FormData for file upload
+      const formDataToSend = new FormData();
+      
+      // Add all form fields
+      Object.keys(formData).forEach(key => {
+        formDataToSend.append(key, formData[key]);
       });
-      if (!response.ok) throw new Error('Failed to send email');
-      console.log('Email sent successfully');
-    } catch (error) {
-      console.error('Error sending email:', error.message);
-      alert('Application submitted, but email notification failed. Please contact support.');
-    }
+      
+      // Add timestamp
+      formDataToSend.append('timestamp', new Date().toISOString());
+      
+      // Add resume file if selected
+      if (resumeFile) {
+        formDataToSend.append('resume', resumeFile);
+      }
 
-    alert("Application submitted successfully! Email notification sent.");
-    setShowForm(false);
-    setFormData({ name: "", email: "", phone: "", experience: "", location: "", jobTitle: "" });
+      // Submit application to the career application endpoint
+      const response = await fetch('http://localhost:3001/api/career-application', {
+        method: 'POST',
+        body: formDataToSend, // Don't set Content-Type header for FormData
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to submit application');
+      }
+
+      // Show success message
+      const resumeMessage = resumeFile ? 
+        `📄 Resume "${resumeFile.name}" attached successfully!\n` : 
+        "";
+        
+      alert(`✅ Application submitted successfully!\n${resumeMessage}📧 Email notification has been sent to our HR team.\n🔄 You will hear back from us within 2-3 business days.`);
+      
+      // Reset form
+      setShowForm(false);
+      setFormData({ 
+        name: "", 
+        email: "", 
+        phone: "", 
+        experience: "", 
+        location: "", 
+        jobTitle: "" 
+      });
+      setResumeFile(null);
+      setFileError("");
+      
+      // Reset file input
+      const fileInput = document.getElementById('resume-upload');
+      if (fileInput) fileInput.value = "";
+
+    } catch (error) {
+      console.error('Application submission error:', error);
+      alert(`❌ Error submitting application: ${error.message}\n\nPlease try again or contact support at careers@amgsol.com`);
+    }
   };
 
   // Handle learn more
@@ -226,7 +289,7 @@ const Career = () => {
         <div className="application-form-overlay">
           <div className="application-form">
             <h2>Apply for {formData.jobTitle}</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
               <input
                 type="text"
                 name="name"
@@ -267,6 +330,45 @@ const Career = () => {
                 placeholder="Location"
                 required
               />
+              
+              {/* Resume Upload Field */}
+              <div className="resume-upload-container">
+                <label htmlFor="resume-upload" className="resume-upload-label">
+                  📄 Upload Resume (Optional)
+                </label>
+                <input
+                  type="file"
+                  id="resume-upload"
+                  name="resume"
+                  accept=".pdf,.doc,.docx"
+                  onChange={handleResumeChange}
+                  className="resume-input"
+                />
+                <small className="file-info">Supported: PDF, DOC, DOCX (Max 5MB)</small>
+                
+                {resumeFile && (
+                  <div className="file-selected">
+                    <span className="file-name">📎 {resumeFile.name}</span>
+                    <span className="file-size">({(resumeFile.size / 1024).toFixed(1)} KB)</span>
+                    <button
+                      type="button"
+                      className="remove-file"
+                      onClick={() => {
+                        setResumeFile(null);
+                        document.getElementById('resume-upload').value = "";
+                      }}
+                    >
+                      ❌ Remove
+                    </button>
+                  </div>
+                )}
+                
+                {fileError && (
+                  <div className="file-error">
+                    ⚠️ {fileError}
+                  </div>
+                )}
+              </div>
               <button type="submit" className="submit-button">Submit Application</button>
               <button type="button" className="close-button" onClick={() => setShowForm(false)}>Close</button>
             </form>

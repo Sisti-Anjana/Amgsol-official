@@ -49,12 +49,12 @@
 
 .card {
   background: #f9fafb;
-  padding: 30px;
   border-radius: 15px;
   text-align: center;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .card:hover {
@@ -63,17 +63,50 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
-.card .icon {
-  font-size: 2.8rem;
-  color: #22c55e;
-  margin-bottom: 15px;
+.service-image {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.service-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .service-image img {
+  transform: scale(1.05);
+}
+
+.service-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(34, 197, 94, 0.9);
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.service-overlay .icon {
+  font-size: 2rem;
+  color: white;
 }
 
 .card h4 {
   font-size: 1.2rem;
-  margin-top: 12px;
+  margin: 20px 0;
   font-weight: 600;
   color: #222;
+  padding: 0 20px;
 }
 
 /* =========================

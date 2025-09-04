@@ -1,391 +1,531 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { blogData } from '../data/blogData';
 import './Insights.css';
 
 const Insights = () => {
-  const [activeTab, setActiveTab] = useState('insights');
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [likedPosts, setLikedPosts] = useState(new Set());
-  const [bookmarkedPosts, setBookmarkedPosts] = useState(new Set());
+  const [searchTerm, setSearchTerm] = useState('');
+  const [dateFilter, setDateFilter] = useState('');
+  const [sortBy, setSortBy] = useState('latest');
+  const [selectedBlog, setSelectedBlog] = useState(null);
+  const [blogs, setBlogs] = useState(blogData);
+  const [showAddBlogForm, setShowAddBlogForm] = useState(false);
+  const [newBlog, setNewBlog] = useState({
+    title: '',
+    author: 'American Green Solutions',
+    category: 'Solar Energy',
+    date: new Date().toISOString().split('T')[0],
+    preview: '',
+    content: '',
+    image: 'blog1.jpeg'
+  });
 
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
-
-  const insights = [
-    {
-      id: 1,
-      title: "Solar-Powered Hydrogen: The Green Fuel of the Future",
-      summary: "Exploring how green hydrogen, produced using solar energy, offers a renewable vision for a decarbonized world, tackling hard-to-electrify sectors and revolutionizing energy storage.",
-      category: "Green Energy",
-      readTime: "12 min",
-      views: "18.7k",
-      author: "Dr. Sarah Chen",
-      date: "2024-09-01",
-      image: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=500&h=300&fit=crop",
-      metrics: {
-        engagement: 94,
-        growth: "+45%",
-        impact: "High",
-        co2Reduction: "2.3M tons"
-      },
-      tags: ["Hydrogen", "Solar Energy", "Decarbonization"],
-      link: "/insights/solar-hydrogen"
-    },    {
-      id: 2,
-      title: "U.S. Data Centers Energy Demand & Solar Solutions",
-      summary: "Deep dive into how solar energy is poised to meet the surging energy demands of U.S. data centers driven by cloud computing, AI, and digital transformation.",
-      category: "Energy Efficiency",
-      readTime: "15 min", 
-      views: "24.3k",
-      author: "Michael Rodriguez",
-      date: "2024-08-28",
-      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=500&h=300&fit=crop",
-      metrics: {
-        engagement: 87,
-        growth: "+32%",
-        impact: "High",
-        co2Reduction: "1.8M tons"
-      },
-      tags: ["Data Centers", "AI", "Solar Power"],
-      link: "/insights/data-centers-solar"
-    },
-    {
-      id: 3,
-      title: "IRA Impact: Supercharging Solar Growth in America",
-      summary: "Analyzing how the Inflation Reduction Act's $370 billion investment is transforming the solar industry, offering unprecedented opportunities for sustainable growth.",
-      category: "Policy & Growth",
-      readTime: "10 min",
-      views: "31.5k", 
-      author: "Emma Thompson",
-      date: "2024-08-25",
-      image: "https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=500&h=300&fit=crop",
-      metrics: {
-        engagement: 92,
-        growth: "+67%", 
-        impact: "Critical",
-        co2Reduction: "5.2M tons"
-      },
-      tags: ["Policy", "Investment", "Growth"],
-      link: "/insights/ira-solar-growth"
-    },
-    {
-      id: 4,
-      title: "Digital O&M: Revolutionizing Renewable Energy Efficiency",
-      summary: "Comprehensive look at how digital Operations and Maintenance solutions are maximizing energy output and ROI across expanding renewable energy projects.",
-      category: "Technology",
-      readTime: "8 min",
-      views: "16.8k",
-      author: "Alex Johnson",
-      date: "2024-08-22",
-      image: "https://images.unsplash.com/photo-1581092160607-ee67c0d5a9e8?w=500&h=300&fit=crop",
-      metrics: {
-        engagement: 89,
-        growth: "+28%",
-        impact: "Medium",
-        co2Reduction: "950k tons"
-      },
-      tags: ["Digital", "O&M", "Efficiency"],
-      link: "/insights/digital-o-m"
+  // Import blog images
+  const getImagePath = (imageName) => {
+    try {
+      return require(`../assets/${imageName}`);
+    } catch (error) {
+      return require('../assets/blog1.jpeg'); // fallback image
     }
-  ];
-  const blogs = [
-    {
-      id: 1,
-      title: "Evolution of Solar Modules: Which Technology Leads the Future?",
-      excerpt: "Dive into the dramatic rise of solar PV efficiency, from 15% in the 1970s to over 47% in 2024, and explore the cutting-edge technologies shaping tomorrow's energy landscape.",
-      category: "Technology",
-      readTime: "12 min",
-      views: "42.1k",
-      likes: 567,
-      comments: 89,
-      author: "Dr. Lisa Zhang",
-      date: "2024-09-02",
-      image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=500&h=300&fit=crop",
-      tags: ["Solar Panels", "Efficiency", "Innovation"],
-      featured: true,
-      link: "/insights/solar-module-evolution"
-    },
-    {
-      id: 2,
-      title: "Space-Based Solar Power: Beaming Energy from Orbit", 
-      excerpt: "Uncover ESA's SOLARIS initiative and NASA's space-based solar power projects - groundbreaking efforts to harness unlimited solar power from space for continuous clean energy supply.",
-      category: "Innovation",
-      readTime: "18 min",
-      views: "28.9k",
-      likes: 423,
-      comments: 67,
-      author: "David Kim",
-      date: "2024-08-30",
-      image: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=500&h=300&fit=crop",
-      tags: ["Space Solar", "ESA", "Innovation"],
-      link: "/insights/space-solar-power"
-    },    {
-      id: 3,
-      title: "Solar Tracking Technology: Maximizing Energy Capture",
-      excerpt: "Learn how advanced solar tracking technology enhances efficiency by 25-35% through intelligent panel orientation, weather prediction, and AI-driven optimization systems.",
-      category: "Engineering", 
-      readTime: "10 min",
-      views: "35.7k",
-      likes: 394,
-      comments: 52,
-      author: "Maya Patel",
-      date: "2024-08-28",
-      image: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=500&h=300&fit=crop",
-      tags: ["Solar Tracking", "Efficiency", "Engineering"],
-      link: "/insights/solar-tracking"
-    },
-    {
-      id: 4,
-      title: "Digital Asset Performance: Transforming Solar Investments",
-      excerpt: "Explore how digital monitoring and AI-powered analytics ensure solar investments deliver peak performance across commercial, industrial, and residential sectors.",
-      category: "Digital Solutions",
-      readTime: "14 min", 
-      views: "22.4k",
-      likes: 298,
-      comments: 41,
-      author: "Carlos Rodriguez",
-      date: "2024-08-26",
-      image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=500&h=300&fit=crop",
-      tags: ["Digital", "Performance", "Analytics"],
-      link: "/insights/digital-asset-performance"
-    },
-    {
-      id: 5,
-      title: "Solar by 2030: A Brighter Future for America's Energy",
-      excerpt: "Vision for solar energy supplying 40% of the nation's electricity by 2030, exploring policy support, technological advances, and infrastructure development needed.",
-      category: "Future Vision",
-      readTime: "16 min",
-      views: "47.2k",
-      likes: 682,
-      comments: 124,
-      author: "Jennifer Liu",
-      date: "2024-08-24",
-      image: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=500&h=300&fit=crop",
-      tags: ["Future", "Policy", "Vision 2030"],
-      featured: true,
-      link: "/insights/solar-by-2030"
-    }
-  ];
-  const categories = [
-    { id: 'all', name: 'All Content', count: 18 },
-    { id: 'Green Energy', name: 'Green Energy', count: 8 },
-    { id: 'Technology', name: 'Technology', count: 12 },
-    { id: 'Innovation', name: 'Innovation', count: 6 },
-    { id: 'Policy & Growth', name: 'Policy', count: 4 },
-    { id: 'Digital Solutions', name: 'Digital', count: 7 }
-  ];
+  };
 
-  const toggleLike = (id) => {
-    setLikedPosts(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(id)) {
-        newSet.delete(id);
-      } else {
-        newSet.add(id);
+  // Filter and sort blogs based on search criteria
+  const filteredBlogs = useMemo(() => {
+    let filtered = blogs.filter(blog => {
+      const matchesSearch = blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           blog.preview.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesDate = !dateFilter || blog.date.includes(dateFilter);
+      return matchesSearch && matchesDate;
+    });
+
+    // Sort blogs
+    filtered.sort((a, b) => {
+      switch (sortBy) {
+        case 'oldest':
+          return new Date(a.date) - new Date(b.date);
+        case 'latest':
+          return new Date(b.date) - new Date(a.date);
+        case 'name':
+          return a.title.localeCompare(b.title);
+        default:
+          return new Date(b.date) - new Date(a.date);
       }
-      return newSet;
+    });
+
+    return filtered;
+  }, [searchTerm, dateFilter, sortBy, blogs]);
+
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
     });
   };
 
-  const toggleBookmark = (id) => {
-    setBookmarkedPosts(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(id)) {
-        newSet.delete(id);
-      } else {
-        newSet.add(id);
-      }
-      return newSet;
-    });
+  const openBlogModal = (blog) => {
+    setSelectedBlog(blog);
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
   };
 
-  const getImpactColor = (impact) => {
-    switch(impact) {
-      case 'Critical': return 'critical-impact';
-      case 'High': return 'high-impact';
-      case 'Medium': return 'medium-impact';
-      default: return 'low-impact';
+  const closeBlogModal = () => {
+    setSelectedBlog(null);
+    document.body.style.overflow = 'unset'; // Restore scrolling
+  };
+
+  const addComment = (blogId, commentText) => {
+    if (!commentText.trim()) return;
+    
+    const newComment = {
+      author: 'Anonymous User',
+      text: commentText,
+      date: new Date().toLocaleDateString()
+    };
+    
+    setBlogs(prevBlogs => 
+      prevBlogs.map(blog => 
+        blog.id === blogId 
+          ? { ...blog, comments: [...blog.comments, newComment] }
+          : blog
+      )
+    );
+  };
+
+  const toggleLike = (blogId) => {
+    setBlogs(prevBlogs => 
+      prevBlogs.map(blog => 
+        blog.id === blogId 
+          ? { ...blog, likes: blog.likes + 1 }
+          : blog
+      )
+    );
+  };
+
+  const addNewBlog = () => {
+    if (!newBlog.title.trim() || !newBlog.preview.trim()) {
+      alert('Please fill in title and preview');
+      return;
+    }
+
+    const blogToAdd = {
+      id: Math.max(...blogs.map(b => b.id)) + 1,
+      title: newBlog.title,
+      date: newBlog.date,
+      author: newBlog.author,
+      category: newBlog.category,
+      image: newBlog.image,
+      preview: newBlog.preview,
+      content: newBlog.content || `<h2>${newBlog.title}</h2><p>${newBlog.preview}</p>`,
+      comments: [],
+      likes: 0
+    };
+
+    setBlogs(prevBlogs => [blogToAdd, ...prevBlogs]);
+    setNewBlog({
+      title: '',
+      author: 'American Green Solutions',
+      category: 'Solar Energy',
+      date: new Date().toISOString().split('T')[0],
+      preview: '',
+      content: '',
+      image: 'blog1.jpeg'
+    });
+    setShowAddBlogForm(false);
+  };
+
+  const deleteBlog = (blogId) => {
+    const firstConfirm = window.confirm('Are you sure you want to delete this blog post?');
+    if (firstConfirm) {
+      const secondConfirm = window.confirm('This action cannot be undone. Do you really want to remove this blog post permanently?');
+      if (secondConfirm) {
+        setBlogs(prevBlogs => prevBlogs.filter(blog => blog.id !== blogId));
+        if (selectedBlog && selectedBlog.id === blogId) {
+          setSelectedBlog(null);
+        }
+      }
     }
   };
 
-  const filteredInsights = selectedCategory === 'all' ? insights : insights.filter(item => item.category === selectedCategory);
-  const filteredBlogs = selectedCategory === 'all' ? blogs : blogs.filter(item => item.category === selectedCategory);
+  const handleEmailShare = (blog) => {
+    const subject = encodeURIComponent(`Check out this article: ${blog.title}`);
+    const body = encodeURIComponent(`I thought you might be interested in this article:\n\n${blog.title}\n\n${blog.preview}\n\nRead more at: ${window.location.origin}/insights`);
+    window.open(`mailto:?subject=${subject}&body=${body}`);
+  };
+
+  const handleCopyLink = (blog) => {
+    const url = `${window.location.origin}/insights#blog-${blog.id}`;
+    navigator.clipboard.writeText(url).then(() => {
+      alert('Link copied to clipboard!');
+    }).catch(() => {
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = url;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      alert('Link copied to clipboard!');
+    });
+  };
+
+  const handleSocialShare = (blog) => {
+    const url = encodeURIComponent(`${window.location.origin}/insights#blog-${blog.id}`);
+    const text = encodeURIComponent(`Check out this article: ${blog.title}`);
+    
+    // Try to use Web Share API if available
+    if (navigator.share) {
+      navigator.share({
+        title: blog.title,
+        text: blog.preview,
+        url: `${window.location.origin}/insights#blog-${blog.id}`
+      });
+    } else {
+      // Fallback to Twitter share
+      window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+    }
+  };
+
   return (
-    <div className={`insights-container ${isLoaded ? 'loaded' : ''}`}>
-      {/* Enhanced Header */}
-      <section className="insights-hero">
-        <div className="hero-content">
-          <div className="hero-badge">
-            <span className="badge-icon">☀️</span>
-            <span>AmgSol Insights</span>
-          </div>
-          <h1>Powering the Future with Solar Innovation</h1>
-          <p>Explore our latest perspectives on solar technology, sustainability breakthroughs, and the clean energy revolution shaping tomorrow's world.</p>
-          
-          {/* Stats */}
-          <div className="hero-stats">
-            <div className="stat-item">
-              <span className="stat-value">12.4M</span>
-              <span className="stat-label">CO₂ Tons Reduced</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-value">850</span>
-              <span className="stat-label">GWh Generated</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-value">47.2k</span>
-              <span className="stat-label">Active Readers</span>
-            </div>
+    <motion.div 
+      className="insights-container"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      {/* Header Section */}
+      <div className="insights-header">
+        <h1>Insights & <span className="highlight">Blogs</span></h1>
+        <p>Stay updated with the latest trends and innovations in renewable energy and solar solutions</p>
+      </div>
+
+      {/* Search and Filter Controls */}
+      <div className="filter-controls">
+        <div className="search-section">
+          <div className="search-box">
+            <input
+              type="text"
+              placeholder="Search by name or content..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search-input"
+            />
+            <span className="search-icon">🔍</span>
           </div>
         </div>
-      </section>
 
-      {/* Navigation Tabs */}
-      <div className="content-tabs">
+        <div className="filter-options">
+          <div className="filter-item">
+            <label>Search by Date:</label>
+            <input
+              type="month"
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value)}
+              className="date-filter"
+            />
+          </div>
+
+          <div className="filter-item">
+            <label>Sort by:</label>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="sort-select"
+            >
+              <option value="latest">Latest to Oldest</option>
+              <option value="oldest">Oldest to Latest</option>
+              <option value="name">Name (A-Z)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {/* Blog Grid - 3 per row */}
+      <div className="blog-grid">
+        {filteredBlogs.map((blog) => (
+          <motion.div 
+            key={blog.id} 
+            className="blog-card"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+            whileHover={{ y: -5, boxShadow: "0 10px 25px rgba(0,0,0,0.1)" }}
+          >
+            <div className="blog-header">
+              <div className="blog-date">{formatDate(blog.date)}</div>
+              <h3 className="blog-title">{blog.title}</h3>
+            </div>
+            
+            <div className="blog-image">
+              <img src={getImagePath(blog.image)} alt={blog.title} />
+            </div>
+            
+            <div className="blog-content">
+              <p className="blog-excerpt">
+                {blog.preview.substring(0, 120)}...
+              </p>
+              
+              <div className="blog-actions">
+                <div className="action-buttons">
+                  <button 
+                    className="read-more-btn"
+                    onClick={() => openBlogModal(blog)}
+                  >
+                    Read More
+                  </button>
+                  <button 
+                    className="delete-btn"
+                    onClick={() => deleteBlog(blog.id)}
+                  >
+                    🗑️ Delete
+                  </button>
+                </div>
+                <div className="blog-stats">
+                  <button 
+                    className="like-btn"
+                    onClick={() => toggleLike(blog.id)}
+                  >
+                    ❤️ {blog.likes}
+                  </button>
+                  <span className="comment-count">💬 {blog.comments.length}</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {filteredBlogs.length === 0 && (
+        <div className="no-results">
+          <p>No blogs found matching your search criteria.</p>
+          <button onClick={() => {
+            setSearchTerm('');
+            setDateFilter('');
+            setSortBy('latest');
+          }}>
+            Clear Filters
+          </button>
+        </div>
+      )}
+
+      {/* Add New Blog Button */}
+      <div className="add-blog-section">
         <button 
-          className={`tab-button ${activeTab === 'insights' ? 'active' : ''}`}
-          onClick={() => setActiveTab('insights')}
+          className="add-blog-btn"
+          onClick={() => setShowAddBlogForm(true)}
         >
-          <span className="tab-icon">📊</span>
-          Data Insights
-        </button>
-        <button 
-          className={`tab-button ${activeTab === 'blogs' ? 'active' : ''}`}
-          onClick={() => setActiveTab('blogs')}
-        >
-          <span className="tab-icon">📝</span>
-          Expert Blogs
+          ➕ Add New Blog
         </button>
       </div>
 
-      {/* Category Filter */}
-      <div className="category-filter">
-        {categories.map(category => (
-          <button
-            key={category.id}
-            onClick={() => setSelectedCategory(category.id)}
-            className={`category-btn ${selectedCategory === category.id ? 'active' : ''}`}
+      {/* Add Blog Form Modal */}
+      {showAddBlogForm && (
+        <div className="blog-modal-overlay" onClick={() => setShowAddBlogForm(false)}>
+          <motion.div 
+            className="blog-modal add-blog-modal" 
+            onClick={(e) => e.stopPropagation()}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
           >
-            {category.name}
-            <span className="category-count">{category.count}</span>
-          </button>
-        ))}
-      </div>      {/* Content Grid */}
-      {activeTab === 'insights' ? (
-        <section className="insights-grid">
-          {filteredInsights.map((insight, index) => (
-            <div key={insight.id} className="insight-card enhanced">
-              <div className="card-image">
-                <img src={insight.image} alt={insight.title} />
-                <div className="image-overlay">
-                  <span className="category-tag">{insight.category}</span>
-                  <span className={`impact-badge ${getImpactColor(insight.metrics.impact)}`}>
-                    {insight.metrics.impact} Impact
-                  </span>
-                </div>
-                <div className="co2-badge">
-                  {insight.metrics.co2Reduction} CO₂ saved
-                </div>
-              </div>
-              
-              <div className="card-content">
-                <div className="card-meta">
-                  <span className="date">📅 {new Date(insight.date).toLocaleDateString()}</span>
-                  <span className="read-time">⏱ {insight.readTime}</span>
-                  <span className="views">👁 {insight.views}</span>
+            <div className="modal-header">
+              <h2>Add New Blog Post</h2>
+              <button className="close-btn" onClick={() => setShowAddBlogForm(false)}>×</button>
+            </div>
+            
+            <div className="modal-content">
+              <div className="add-blog-form">
+                <div className="form-group">
+                  <label>Title *</label>
+                  <input
+                    type="text"
+                    value={newBlog.title}
+                    onChange={(e) => setNewBlog({...newBlog, title: e.target.value})}
+                    placeholder="Enter blog title"
+                  />
                 </div>
                 
-                <h2>{insight.title}</h2>
-                <p>{insight.summary}</p>
-                
-                {/* Enhanced Metrics */}
-                <div className="metrics-grid">
-                  <div className="metric">
-                    <span className="metric-value">{insight.metrics.engagement}%</span>
-                    <span className="metric-label">Engagement</span>
-                  </div>
-                  <div className="metric">
-                    <span className="metric-value">{insight.metrics.growth}</span>
-                    <span className="metric-label">Growth</span>
-                  </div>
-                  <div className="metric">
-                    <span className="metric-icon">📈</span>
-                    <span className="metric-label">Analytics</span>
-                  </div>
+                <div className="form-group">
+                  <label>Date</label>
+                  <input
+                    type="date"
+                    value={newBlog.date}
+                    onChange={(e) => setNewBlog({...newBlog, date: e.target.value})}
+                  />
                 </div>
                 
-                <div className="card-footer">
-                  <div className="author-info">
-                    <div className="author-avatar">
-                      {insight.author.charAt(0)}
-                    </div>
-                    <span className="author-name">{insight.author}</span>
-                  </div>
-                  <a href={insight.link} className="read-more-button">
-                    View Insight →
-                  </a>
+                <div className="form-group">
+                  <label>Author</label>
+                  <input
+                    type="text"
+                    value={newBlog.author}
+                    onChange={(e) => setNewBlog({...newBlog, author: e.target.value})}
+                    placeholder="Author name"
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label>Category</label>
+                  <select
+                    value={newBlog.category}
+                    onChange={(e) => setNewBlog({...newBlog, category: e.target.value})}
+                  >
+                    <option value="Solar Energy">Solar Energy</option>
+                    <option value="Renewable Energy">Renewable Energy</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Sustainability">Sustainability</option>
+                    <option value="Future Technology">Future Technology</option>
+                  </select>
+                </div>
+                
+                <div className="form-group">
+                  <label>Image</label>
+                  <select
+                    value={newBlog.image}
+                    onChange={(e) => setNewBlog({...newBlog, image: e.target.value})}
+                  >
+                    <option value="blog1.jpeg">Blog Image 1</option>
+                    <option value="blog2.jpeg">Blog Image 2</option>
+                    <option value="blog3.jpeg">Blog Image 3</option>
+                    <option value="blog4.jpeg">Blog Image 4</option>
+                    <option value="blog5.jpeg">Blog Image 5</option>
+                    <option value="blog6.jpeg">Blog Image 6</option>
+                    <option value="blog7.jpeg">Blog Image 7</option>
+                    <option value="blog8.jpeg">Blog Image 8</option>
+                    <option value="blog9.jpeg">Blog Image 9</option>
+                    <option value="blog10.jpeg">Blog Image 10</option>
+                    <option value="blog11.jpeg">Blog Image 11</option>
+                    <option value="blog12.jpeg">Blog Image 12</option>
+                    <option value="blog13.jpeg">Blog Image 13</option>
+                    <option value="blog14.jpeg">Blog Image 14</option>
+                    <option value="blog15.jpeg">Blog Image 15</option>
+                    <option value="blog16.jpeg">Blog Image 16</option>
+                    <option value="blog17.jpeg">Blog Image 17</option>
+                    <option value="blog18.jpeg">Blog Image 18</option>
+                    <option value="blog19.jpeg">Blog Image 19</option>
+                    <option value="blog20.jpeg">Blog Image 20</option>
+                  </select>
+                </div>
+                
+                <div className="form-group">
+                  <label>Preview *</label>
+                  <textarea
+                    value={newBlog.preview}
+                    onChange={(e) => setNewBlog({...newBlog, preview: e.target.value})}
+                    placeholder="Brief description of the blog post"
+                    rows="3"
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label>Content (Optional)</label>
+                  <textarea
+                    value={newBlog.content}
+                    onChange={(e) => setNewBlog({...newBlog, content: e.target.value})}
+                    placeholder="Full blog content (HTML supported)"
+                    rows="6"
+                  />
+                </div>
+                
+                <div className="form-actions">
+                  <button className="cancel-btn" onClick={() => setShowAddBlogForm(false)}>
+                    Cancel
+                  </button>
+                  <button className="submit-btn" onClick={addNewBlog}>
+                    Add Blog
+                  </button>
                 </div>
               </div>
             </div>
-          ))}
-        </section>
-      ) : (
-        <section className="insights-grid">
-          {filteredBlogs.map((blog, index) => (
-            <div key={blog.id} className={`insight-card blog-card ${blog.featured ? 'featured' : ''}`}>
-              <div className="card-image">
-                <img src={blog.image} alt={blog.title} />
-                <div className="image-overlay">
-                  <span className="category-tag">{blog.category}</span>
-                  {blog.featured && <span className="featured-badge">⭐ Featured</span>}
-                </div>
-                <button 
-                  className={`bookmark-btn ${bookmarkedPosts.has(blog.id) ? 'active' : ''}`}
-                  onClick={() => toggleBookmark(blog.id)}
-                >
-                  🔖
-                </button>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Blog Modal */}
+      {selectedBlog && (
+        <div className="blog-modal-overlay" onClick={closeBlogModal}>
+          <motion.div 
+            className="blog-modal" 
+            onClick={(e) => e.stopPropagation()}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="modal-header">
+              <h2>{selectedBlog.title}</h2>
+              <button className="close-btn" onClick={closeBlogModal}>×</button>
+            </div>
+            
+            <div className="modal-content">
+              <div className="modal-meta">
+                <span className="modal-date">{formatDate(selectedBlog.date)}</span>
+                <span className="modal-author">By {selectedBlog.author}</span>
+                <span className="modal-category">{selectedBlog.category}</span>
               </div>
               
-              <div className="card-content">
-                <div className="card-meta">
-                  <span className="date">📅 {new Date(blog.date).toLocaleDateString()}</span>
-                  <span className="read-time">⏱ {blog.readTime}</span>
-                  <span className="views">👁 {blog.views}</span>
+              <div className="modal-image">
+                <img src={getImagePath(selectedBlog.image)} alt={selectedBlog.title} />
+              </div>
+              
+              <div className="modal-text">
+                <div dangerouslySetInnerHTML={{ __html: selectedBlog.content }} />
+              </div>
+              
+              <div className="modal-footer">
+                <div className="social-share">
+                  <span>Share this article:</span>
+                  <button className="share-btn" onClick={() => handleEmailShare(selectedBlog)}>📧 Email</button>
+                  <button className="share-btn" onClick={() => handleCopyLink(selectedBlog)}>🔗 Copy Link</button>
+                  <button className="share-btn" onClick={() => handleSocialShare(selectedBlog)}>📱 Social Media</button>
                 </div>
                 
-                <h2>{blog.title}</h2>
-                <p>{blog.excerpt}</p>
-                
-                <div className="blog-tags">
-                  {blog.tags.map((tag, i) => (
-                    <span key={i} className="blog-tag">#{tag}</span>
-                  ))}
-                </div>
-                
-                <div className="card-footer">
-                  <div className="author-info">
-                    <div className="author-name">{blog.author}</div>
+                <div className="comments-section">
+                  <h4>Comments ({selectedBlog.comments.length})</h4>
+                  <div className="comment-form">
+                    <textarea 
+                      id={`comment-${selectedBlog.id}`}
+                      placeholder="Add your comment..." 
+                      rows="3"
+                    ></textarea>
+                    <button 
+                      className="submit-comment"
+                      onClick={() => {
+                        const textarea = document.getElementById(`comment-${selectedBlog.id}`);
+                        const commentText = textarea.value;
+                        if (commentText.trim()) {
+                          addComment(selectedBlog.id, commentText);
+                          textarea.value = '';
+                          // Update selected blog to reflect new comment
+                          const updatedBlog = blogs.find(b => b.id === selectedBlog.id);
+                          if (updatedBlog) {
+                            setSelectedBlog(updatedBlog);
+                          }
+                        }
+                      }}
+                    >
+                      Post Comment
+                    </button>
                   </div>
                   
-                  <div className="blog-actions">
-                    <button 
-                      className={`like-btn ${likedPosts.has(blog.id) ? 'active' : ''}`}
-                      onClick={() => toggleLike(blog.id)}
-                    >
-                      ❤️ {blog.likes + (likedPosts.has(blog.id) ? 1 : 0)}
-                    </button>
-                    <span className="comments">💬 {blog.comments}</span>
-                    <a href={blog.link} className="read-more-button">Read More →</a>
+                  <div className="comments-list">
+                    {selectedBlog.comments.length === 0 ? (
+                      <p className="no-comments">Be the first to comment!</p>
+                    ) : (
+                      selectedBlog.comments.map((comment, index) => (
+                        <div key={index} className="comment">
+                          <strong>{comment.author}</strong>
+                          <span className="comment-date">{comment.date}</span>
+                          <p>{comment.text}</p>
+                        </div>
+                      ))
+                    )}
                   </div>
                 </div>
               </div>
             </div>
-          ))}
-        </section>
+          </motion.div>
+        </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

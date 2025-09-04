@@ -1,27 +1,35 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaHome, FaIndustry, FaBolt, FaChartLine } from 'react-icons/fa';
+// import { FaHome, FaIndustry, FaBolt, FaChartLine } from 'react-icons/fa';
+import service1 from '../assets/service1.jpg';
+import service2 from '../assets/service2.jpg';
+import service3 from '../assets/service3.jpg';
+import service4 from '../assets/service4.jpg';
 import './Features.css';
 
 const Features = () => {
   const features = [
     {
-      icon: <FaHome className="icon" />,
+      // icon: <FaHome className="icon" />,
+      image: service1,
       title: 'Streamlined Information',
       text: 'While there are many tools available for analyzing energy data, we stand out by providing a simple and centralized solution.'
     },
     {
-      icon: <FaIndustry className="icon" />,
+      // icon: <FaIndustry className="icon" />,
+      image: service2,
       title: 'Expertise in Large Energy Plants',
       text: 'We understand the unique challenges faced by businesses with large estates and extensive physical assets that consume significant amounts of energy.'
     },
     {
-      icon: <FaBolt className="icon" />,
+      // icon: <FaBolt className="icon" />,
+      image: service3,
       title: 'Real-Time Performance Insights',
       text: 'This real-time visibility enhances decision-making, allowing you to optimize energy production and ensure continuous peak performance.'
     },
     {
-      icon: <FaChartLine className="icon" />,
+      // icon: <FaChartLine className="icon" />,
+      image: service4,
       title: 'Data-Driven Analytics',
       text: 'Harness the power of innovation and analytics to maximize the value of your solar energy assets.'
     }
@@ -61,9 +69,16 @@ const Features = () => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: index * 0.2, duration: 0.5 }}
             >
-              {feature.icon}
-              <h4>{feature.title}</h4>
-              <p>{feature.text}</p>
+              <div className="feature-image">
+                <img src={feature.image} alt={feature.title} />
+                <div className="feature-overlay">
+                  {feature.icon}
+                </div>
+              </div>
+              <div className="feature-content">
+                <h4>{feature.title}</h4>
+                <p>{feature.text}</p>
+              </div>
             </motion.div>
           ))}
         </div>

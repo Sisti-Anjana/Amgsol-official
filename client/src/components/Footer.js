@@ -30,6 +30,17 @@ const Footer = () => {
               Naperville IL 60563, USA
             </a>
           </p>
+
+          {/* Hyderabad Office */}
+          <p>
+            <FaMapMarkerAlt className="footer-icon" />
+            <a 
+              href="https://www.google.com/maps/search/?api=1&query=Sanali+Spazio,+LG+Floor,+Plot+No.+19,+Survey+No.+64,+Software+Unit+Layout,+Madhapur,+Hyderabad+500081,+Telangana,+India" 
+              target="_blank" rel="noopener noreferrer"
+            >
+              Hyderabad Office, Telangana, India
+            </a>
+          </p>
         </div>
 
         {/* Social Media */}

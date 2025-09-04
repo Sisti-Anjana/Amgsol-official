@@ -587,8 +587,48 @@
   box-shadow: 0 6px 20px rgba(46, 125, 50, 0.3);
 }
 
-/* Responsive Design */
+/* Tablet Responsive */
+@media (max-width: 1024px) {
+  .career-container {
+    padding-top: 70px;
+  }
+
+  .career-hero {
+    padding: 70px 30px 50px;
+  }
+
+  .career-hero h1 {
+    font-size: 3rem;
+  }
+
+  .career-hero h2 {
+    font-size: 1.8rem;
+  }
+
+  .job-grid {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .benefits-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+  .benefits-list {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
+/* Mobile Responsive */
 @media (max-width: 768px) {
+  .career-container {
+    padding-top: 60px;
+  }
+
+  .career-hero {
+    padding: 60px 20px 40px;
+  }
+
   .career-hero h1 {
     font-size: 2.5rem;
   }
@@ -597,15 +637,37 @@
     font-size: 1.5rem;
   }
 
+  .hero-subtitle h3 {
+    font-size: 1.5rem;
+  }
+
+  .hero-subtitle p {
+    font-size: 1.1rem;
+  }
+
+  .career-search-section {
+    padding: 25px 15px;
+  }
+
   .career-filters {
     flex-direction: column;
     align-items: center;
+    gap: 15px;
   }
 
   .career-filters select,
   .career-filters input {
     min-width: 100%;
     max-width: 400px;
+    font-size: 16px;
+  }
+
+  .job-listings,
+  .why-join-us,
+  .employee-benefits,
+  .application-process,
+  .career-contact {
+    padding: 50px 15px;
   }
 
   .job-grid {
@@ -616,13 +678,46 @@
     padding: 1.5rem;
   }
 
+  .job-header h3 {
+    font-size: 1.3rem;
+  }
+
+  .job-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .apply-button,
+  .learn-more-button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .benefits-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .benefits-list {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
   .process-steps {
     flex-direction: column;
+    gap: 2rem;
   }
 
   .contact-info {
     flex-direction: column;
     align-items: center;
+    gap: 1rem;
+  }
+
+  .contact-item {
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
   }
 
   .cta-buttons {
@@ -634,11 +729,45 @@
     width: 100%;
     max-width: 300px;
   }
+
+  .application-form {
+    width: 95%;
+    max-width: 400px;
+    padding: 1.5rem;
+  }
+
+  .application-form input {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .submit-button,
+  .close-button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 }
 
+/* Small Mobile */
 @media (max-width: 480px) {
   .career-hero {
-    padding: 60px 15px 40px;
+    padding: 50px 15px 30px;
+  }
+
+  .career-hero h1 {
+    font-size: 2rem;
+  }
+
+  .career-hero h2 {
+    font-size: 1.3rem;
+  }
+
+  .hero-subtitle h3 {
+    font-size: 1.3rem;
+  }
+
+  .hero-subtitle p {
+    font-size: 1rem;
   }
 
   .job-listings,
@@ -646,22 +775,125 @@
   .employee-benefits,
   .application-process,
   .career-contact {
-    padding: 60px 15px;
+    padding: 40px 10px;
   }
 
   .job-card {
     padding: 1.25rem;
   }
 
-  .job-actions {
-    flex-direction: column;
+  .job-header h3 {
+    font-size: 1.2rem;
   }
 
-  .apply-button,
-  .learn-more-button,
-  .submit-button,
-  .close-button {
-    text-align: center;
-    width: 100%;
+  .job-detail-item {
+    flex-direction: column;
+    align-items: flex-start;
   }
+
+  .job-detail-item strong {
+    min-width: auto;
+    margin-bottom: 5px;
+  }
+
+  .benefit-item {
+    padding: 1.5rem;
+  }
+
+  .benefit-category {
+    padding: 1.5rem;
+  }
+
+  .application-form {
+    padding: 1rem;
+  }
+
+  .application-form h2 {
+    font-size: 1.3rem;
+  }
+
+  .resume-upload-container {
+    padding: 10px;
+  }
+
+  .file-selected {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+}
+/* Resume Upload Styles */
+.resume-upload-container {
+  margin: 15px 0;
+  padding: 15px;
+  border: 2px dashed #2c5530;
+  border-radius: 8px;
+  background: #f8fcf9;
+}
+
+.resume-upload-label {
+  display: block;
+  color: #2c5530;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.resume-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+}
+
+.file-info {
+  display: block;
+  color: #666;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
+.file-selected {
+  margin-top: 10px;
+  padding: 10px;
+  background: #e8f5e8;
+  border: 1px solid #2c5530;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.file-name {
+  font-weight: bold;
+  color: #2c5530;
+}
+
+.file-size {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.remove-file {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8em;
+}
+
+.remove-file:hover {
+  background: #ff5252;
+}
+
+.file-error {
+  margin-top: 10px;
+  padding: 8px;
+  background: #ffe6e6;
+  color: #cc0000;
+  border: 1px solid #ffcccc;
+  border-radius: 4px;
+  font-size: 0.9em;
 }
