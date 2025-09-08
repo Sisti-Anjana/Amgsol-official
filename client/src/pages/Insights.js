@@ -272,12 +272,6 @@ const Insights = () => {
                   >
                     Read More
                   </button>
-                  <button 
-                    className="delete-btn"
-                    onClick={() => deleteBlog(blog.id)}
-                  >
-                    🗑️ Delete
-                  </button>
                 </div>
                 <div className="blog-stats">
                   <button 
@@ -307,224 +301,220 @@ const Insights = () => {
         </div>
       )}
 
-      {/* Add New Blog Button */}
-      <div className="add-blog-section">
-        <button 
-          className="add-blog-btn"
-          onClick={() => setShowAddBlogForm(true)}
-        >
-          ➕ Add New Blog
-        </button>
-      </div>
-
       {/* Add Blog Form Modal */}
-      {showAddBlogForm && (
-        <div className="blog-modal-overlay" onClick={() => setShowAddBlogForm(false)}>
-          <motion.div 
-            className="blog-modal add-blog-modal" 
-            onClick={(e) => e.stopPropagation()}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="modal-header">
-              <h2>Add New Blog Post</h2>
-              <button className="close-btn" onClick={() => setShowAddBlogForm(false)}>×</button>
-            </div>
-            
-            <div className="modal-content">
-              <div className="add-blog-form">
-                <div className="form-group">
-                  <label>Title *</label>
-                  <input
-                    type="text"
-                    value={newBlog.title}
-                    onChange={(e) => setNewBlog({...newBlog, title: e.target.value})}
-                    placeholder="Enter blog title"
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <label>Date</label>
-                  <input
-                    type="date"
-                    value={newBlog.date}
-                    onChange={(e) => setNewBlog({...newBlog, date: e.target.value})}
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <label>Author</label>
-                  <input
-                    type="text"
-                    value={newBlog.author}
-                    onChange={(e) => setNewBlog({...newBlog, author: e.target.value})}
-                    placeholder="Author name"
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <label>Category</label>
-                  <select
-                    value={newBlog.category}
-                    onChange={(e) => setNewBlog({...newBlog, category: e.target.value})}
-                  >
-                    <option value="Solar Energy">Solar Energy</option>
-                    <option value="Renewable Energy">Renewable Energy</option>
-                    <option value="Technology">Technology</option>
-                    <option value="Sustainability">Sustainability</option>
-                    <option value="Future Technology">Future Technology</option>
-                  </select>
-                </div>
-                
-                <div className="form-group">
-                  <label>Image</label>
-                  <select
-                    value={newBlog.image}
-                    onChange={(e) => setNewBlog({...newBlog, image: e.target.value})}
-                  >
-                    <option value="blog1.jpeg">Blog Image 1</option>
-                    <option value="blog2.jpeg">Blog Image 2</option>
-                    <option value="blog3.jpeg">Blog Image 3</option>
-                    <option value="blog4.jpeg">Blog Image 4</option>
-                    <option value="blog5.jpeg">Blog Image 5</option>
-                    <option value="blog6.jpeg">Blog Image 6</option>
-                    <option value="blog7.jpeg">Blog Image 7</option>
-                    <option value="blog8.jpeg">Blog Image 8</option>
-                    <option value="blog9.jpeg">Blog Image 9</option>
-                    <option value="blog10.jpeg">Blog Image 10</option>
-                    <option value="blog11.jpeg">Blog Image 11</option>
-                    <option value="blog12.jpeg">Blog Image 12</option>
-                    <option value="blog13.jpeg">Blog Image 13</option>
-                    <option value="blog14.jpeg">Blog Image 14</option>
-                    <option value="blog15.jpeg">Blog Image 15</option>
-                    <option value="blog16.jpeg">Blog Image 16</option>
-                    <option value="blog17.jpeg">Blog Image 17</option>
-                    <option value="blog18.jpeg">Blog Image 18</option>
-                    <option value="blog19.jpeg">Blog Image 19</option>
-                    <option value="blog20.jpeg">Blog Image 20</option>
-                  </select>
-                </div>
-                
-                <div className="form-group">
-                  <label>Preview *</label>
-                  <textarea
-                    value={newBlog.preview}
-                    onChange={(e) => setNewBlog({...newBlog, preview: e.target.value})}
-                    placeholder="Brief description of the blog post"
-                    rows="3"
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <label>Content (Optional)</label>
-                  <textarea
-                    value={newBlog.content}
-                    onChange={(e) => setNewBlog({...newBlog, content: e.target.value})}
-                    placeholder="Full blog content (HTML supported)"
-                    rows="6"
-                  />
-                </div>
-                
-                <div className="form-actions">
-                  <button className="cancel-btn" onClick={() => setShowAddBlogForm(false)}>
-                    Cancel
-                  </button>
-                  <button className="submit-btn" onClick={addNewBlog}>
-                    Add Blog
-                  </button>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      )}
-
-      {/* Blog Modal */}
-      {selectedBlog && (
-        <div className="blog-modal-overlay" onClick={closeBlogModal}>
-          <motion.div 
-            className="blog-modal" 
-            onClick={(e) => e.stopPropagation()}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="modal-header">
-              <h2>{selectedBlog.title}</h2>
-              <button className="close-btn" onClick={closeBlogModal}>×</button>
-            </div>
-            
-            <div className="modal-content">
-              <div className="modal-meta">
-                <span className="modal-date">{formatDate(selectedBlog.date)}</span>
-                <span className="modal-author">By {selectedBlog.author}</span>
-                <span className="modal-category">{selectedBlog.category}</span>
+      <AnimatePresence>
+        {showAddBlogForm && (
+          <div className="blog-modal-overlay" onClick={() => setShowAddBlogForm(false)}>
+            <motion.div 
+              className="blog-modal add-blog-modal" 
+              onClick={(e) => e.stopPropagation()}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="modal-header">
+                <h2>Add New Blog Post</h2>
+                <button className="close-btn" onClick={() => setShowAddBlogForm(false)}>×</button>
               </div>
               
-              <div className="modal-image">
-                <img src={getImagePath(selectedBlog.image)} alt={selectedBlog.title} />
-              </div>
-              
-              <div className="modal-text">
-                <div dangerouslySetInnerHTML={{ __html: selectedBlog.content }} />
-              </div>
-              
-              <div className="modal-footer">
-                <div className="social-share">
-                  <span>Share this article:</span>
-                  <button className="share-btn" onClick={() => handleEmailShare(selectedBlog)}>📧 Email</button>
-                  <button className="share-btn" onClick={() => handleCopyLink(selectedBlog)}>🔗 Copy Link</button>
-                  <button className="share-btn" onClick={() => handleSocialShare(selectedBlog)}>📱 Social Media</button>
-                </div>
-                
-                <div className="comments-section">
-                  <h4>Comments ({selectedBlog.comments.length})</h4>
-                  <div className="comment-form">
-                    <textarea 
-                      id={`comment-${selectedBlog.id}`}
-                      placeholder="Add your comment..." 
-                      rows="3"
-                    ></textarea>
-                    <button 
-                      className="submit-comment"
-                      onClick={() => {
-                        const textarea = document.getElementById(`comment-${selectedBlog.id}`);
-                        const commentText = textarea.value;
-                        if (commentText.trim()) {
-                          addComment(selectedBlog.id, commentText);
-                          textarea.value = '';
-                          // Update selected blog to reflect new comment
-                          const updatedBlog = blogs.find(b => b.id === selectedBlog.id);
-                          if (updatedBlog) {
-                            setSelectedBlog(updatedBlog);
-                          }
-                        }
-                      }}
-                    >
-                      Post Comment
-                    </button>
+              <div className="modal-content">
+                <div className="add-blog-form">
+                  <div className="form-group">
+                    <label>Title *</label>
+                    <input
+                      type="text"
+                      value={newBlog.title}
+                      onChange={(e) => setNewBlog({...newBlog, title: e.target.value})}
+                      placeholder="Enter blog title"
+                    />
                   </div>
                   
-                  <div className="comments-list">
-                    {selectedBlog.comments.length === 0 ? (
-                      <p className="no-comments">Be the first to comment!</p>
-                    ) : (
-                      selectedBlog.comments.map((comment, index) => (
-                        <div key={index} className="comment">
-                          <strong>{comment.author}</strong>
-                          <span className="comment-date">{comment.date}</span>
-                          <p>{comment.text}</p>
-                        </div>
-                      ))
-                    )}
+                  <div className="form-group">
+                    <label>Date</label>
+                    <input
+                      type="date"
+                      value={newBlog.date}
+                      onChange={(e) => setNewBlog({...newBlog, date: e.target.value})}
+                    />
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Author</label>
+                    <input
+                      type="text"
+                      value={newBlog.author}
+                      onChange={(e) => setNewBlog({...newBlog, author: e.target.value})}
+                      placeholder="Author name"
+                    />
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Category</label>
+                    <select
+                      value={newBlog.category}
+                      onChange={(e) => setNewBlog({...newBlog, category: e.target.value})}
+                    >
+                      <option value="Solar Energy">Solar Energy</option>
+                      <option value="Renewable Energy">Renewable Energy</option>
+                      <option value="Technology">Technology</option>
+                      <option value="Sustainability">Sustainability</option>
+                      <option value="Future Technology">Future Technology</option>
+                    </select>
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Image</label>
+                    <select
+                      value={newBlog.image}
+                      onChange={(e) => setNewBlog({...newBlog, image: e.target.value})}
+                    >
+                      <option value="blog1.jpeg">Blog Image 1</option>
+                      <option value="blog2.jpeg">Blog Image 2</option>
+                      <option value="blog3.jpeg">Blog Image 3</option>
+                      <option value="blog4.jpeg">Blog Image 4</option>
+                      <option value="blog5.jpeg">Blog Image 5</option>
+                      <option value="blog6.jpeg">Blog Image 6</option>
+                      <option value="blog7.jpeg">Blog Image 7</option>
+                      <option value="blog8.jpeg">Blog Image 8</option>
+                      <option value="blog9.jpeg">Blog Image 9</option>
+                      <option value="blog10.jpeg">Blog Image 10</option>
+                      <option value="blog11.jpeg">Blog Image 11</option>
+                      <option value="blog12.jpeg">Blog Image 12</option>
+                      <option value="blog13.jpeg">Blog Image 13</option>
+                      <option value="blog14.jpeg">Blog Image 14</option>
+                      <option value="blog15.jpeg">Blog Image 15</option>
+                      <option value="blog16.jpeg">Blog Image 16</option>
+                      <option value="blog17.jpeg">Blog Image 17</option>
+                      <option value="blog18.jpeg">Blog Image 18</option>
+                      <option value="blog19.jpeg">Blog Image 19</option>
+                      <option value="blog20.jpeg">Blog Image 20</option>
+                    </select>
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Preview *</label>
+                    <textarea
+                      value={newBlog.preview}
+                      onChange={(e) => setNewBlog({...newBlog, preview: e.target.value})}
+                      placeholder="Brief description of the blog post"
+                      rows="3"
+                    />
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Content (Optional)</label>
+                    <textarea
+                      value={newBlog.content}
+                      onChange={(e) => setNewBlog({...newBlog, content: e.target.value})}
+                      placeholder="Full blog content (HTML supported)"
+                      rows="6"
+                    />
+                  </div>
+                  
+                  <div className="form-actions">
+                    <button className="cancel-btn" onClick={() => setShowAddBlogForm(false)}>
+                      Cancel
+                    </button>
+                    <button className="submit-btn" onClick={addNewBlog}>
+                      Add Blog
+                    </button>
                   </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        </div>
-      )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Blog Modal */}
+      <AnimatePresence>
+        {selectedBlog && (
+          <div className="blog-modal-overlay" onClick={closeBlogModal}>
+            <motion.div 
+              className="blog-modal" 
+              onClick={(e) => e.stopPropagation()}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="modal-header">
+                <h2>{selectedBlog.title}</h2>
+                <button className="close-btn" onClick={closeBlogModal}>×</button>
+              </div>
+              
+              <div className="modal-content">
+                <div className="modal-meta">
+                  <span className="modal-date">{formatDate(selectedBlog.date)}</span>
+                  <span className="modal-author">By {selectedBlog.author}</span>
+                  <span className="modal-category">{selectedBlog.category}</span>
+                </div>
+                
+                <div className="modal-image">
+                  <img src={getImagePath(selectedBlog.image)} alt={selectedBlog.title} />
+                </div>
+                
+                <div className="modal-text">
+                  <div dangerouslySetInnerHTML={{ __html: selectedBlog.content }} />
+                </div>
+                
+                <div className="modal-footer">
+                  <div className="social-share">
+                    <span>Share this article:</span>
+                    <button className="share-btn" onClick={() => handleEmailShare(selectedBlog)}>📧 Email</button>
+                    <button className="share-btn" onClick={() => handleCopyLink(selectedBlog)}>🔗 Copy Link</button>
+                    <button className="share-btn" onClick={() => handleSocialShare(selectedBlog)}>📱 Social Media</button>
+                  </div>
+                  
+                  <div className="comments-section">
+                    <h4>Comments ({selectedBlog.comments.length})</h4>
+                    <div className="comment-form">
+                      <textarea 
+                        id={`comment-${selectedBlog.id}`}
+                        placeholder="Add your comment..." 
+                        rows="3"
+                      ></textarea>
+                      <button 
+                        className="submit-comment"
+                        onClick={() => {
+                          const textarea = document.getElementById(`comment-${selectedBlog.id}`);
+                          const commentText = textarea.value;
+                          if (commentText.trim()) {
+                            addComment(selectedBlog.id, commentText);
+                            textarea.value = '';
+                            // Update selected blog to reflect new comment
+                            const updatedBlog = blogs.find(b => b.id === selectedBlog.id);
+                            if (updatedBlog) {
+                              setSelectedBlog(updatedBlog);
+                            }
+                          }
+                        }}
+                      >
+                        Post Comment
+                      </button>
+                    </div>
+                    
+                    <div className="comments-list">
+                      {selectedBlog.comments.length === 0 ? (
+                        <p className="no-comments">Be the first to comment!</p>
+                      ) : (
+                        selectedBlog.comments.map((comment, index) => (
+                          <div key={index} className="comment">
+                            <strong>{comment.author}</strong>
+                            <span className="comment-date">{comment.date}</span>
+                            <p>{comment.text}</p>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };
