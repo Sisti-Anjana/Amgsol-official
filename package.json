@@ -1,12 +1,17 @@
 {
   "name": "amgsoll",
   "version": "1.0.0",
-  "description": "",
+  "description": "AMG Solutions - Full Stack Application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "cd client && npm install && npm run build",
+    "start": "node server/index.js",
+    "dev": "concurrently \"cd client && npm start\" \"cd server && npm run dev\""
   },
-  "keywords": [],
+  "keywords": ["AMG", "Solutions", "Full Stack"],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.0"
+  }
 }

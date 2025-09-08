@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://sisti-anjana.github.io/Amgsol-official",
+  "homepage": "https://sisti-anjana.github.io/American-green-solutions",
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^7.0.0",
     "@fortawesome/react-fontawesome": "^3.0.1",
@@ -25,8 +25,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build -r https://github.com/sisti-anjana/Amgsol-official.git",
-    "deploy:github": "npm run build && gh-pages -d build -r https://github.com/sisti-anjana/Amgsol-official.git"
+    "deploy": "gh-pages -d build -r https://github.com/Sisti-Anjana/American-green-solutions.git",
+    "deploy:github": "npm run build && gh-pages -d build -r https://github.com/Sisti-Anjana/American-green-solutions.git"
   },
   "eslintConfig": {
     "extends": [
