@@ -1,0 +1,26 @@
+/* Reset unwanted margins/padding from browser */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* 🚫 stop horizontal scrolling */
+  font-family: Arial, sans-serif;
+}
+
+.home {
+  padding-top: 60px; /* Offset for fixed header */
+  background: #fff;
+  overflow-x: hidden; /* extra safety */
+  width: 100%;
+}
+
+/* Optional: make sure sections don’t overflow */
+.home > * {
+  max-width: 100%;
+  overflow-x: hidden;
+}

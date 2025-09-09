@@ -1,0 +1,416 @@
+/* =========================
+   General About Section
+========================= */
+.about {
+  padding: 60px 20px;
+  max-width: 1200px;
+  margin: auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+.about h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #14532d;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.about h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #166534;
+}
+
+.about p {
+  margin-bottom: 18px;
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.7;
+}
+
+/* =========================
+   Subsection Cards (Home About Us)
+========================= */
+.subsections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.card {
+  background: #f9fafb;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  background: #ecfdf5;
+  transform: translateY(-6px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card .icon {
+  font-size: 2.8rem;
+  color: #22c55e;
+  margin-bottom: 15px;
+}
+
+.card h4 {
+  font-size: 1.2rem;
+  margin-top: 12px;
+  font-weight: 600;
+  color: #222;
+}
+
+/* =========================
+   Message from President & CEO
+========================= */
+/* =========================
+   Message from President & CEO
+========================= */
+.message-president-content,
+.message-ceo-footer {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+  margin-bottom: 40px;
+  padding: 30px;
+  background: #f9fafb;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.image-container {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.president-image,
+.ceo-image {
+  width: 250px;
+  height: 400px;
+  object-fit: cover;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.president-name,
+.ceo-name {
+  text-align: center;
+  margin-top: 12px;
+  font-weight: 600;
+  color: #14532d;
+  font-size: 1.2rem;
+}
+
+.content-text {
+  flex: 1;
+}
+
+.content-text h2 {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  color: #14532d;
+}
+
+.content-text h4 {
+  font-size: 1.2rem;
+  margin-top: 15px;
+  color: #333;
+  font-style: italic;
+  text-align: right;
+}
+
+/* =========================
+   Management Policy & Strategy
+========================= */
+.management-content {
+  padding: 40px;
+  background: #f9fafb;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.management-content h2 {
+  margin-bottom: 30px;
+}
+
+.policy-section {
+  margin-bottom: 25px;
+  padding: 20px;
+  background: #ffffff;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.policy-section:hover {
+  background: #f3f4f6;
+  transform: translateY(-4px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.policy-icon {
+  position: absolute;
+  top: 25px;
+  left: 20px;
+  font-size: 2.5rem;
+  color: #22c55e;
+}
+
+.policy-section h3 {
+  margin-left: 40px;
+  margin-top: 10px;
+}
+
+.policy-section p {
+  margin-left: 40px;
+}
+
+.management-image-container {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.management-image {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  border: 4px solid #22c55e;
+}
+
+.image-caption {
+  font-size: 1rem;
+  margin-top: 12px;
+  color: #444;
+  font-style: italic;
+}
+
+/* =========================
+   Vision & Mission
+========================= */
+.vision-content {
+  padding: 40px;
+  background: #f9fafb;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.vision-content > p {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 40px;
+  font-size: 1.1rem;
+}
+
+.vision-content .grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.vision-content .grid div {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: left;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.vision-content .grid div:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.vision-content .grid svg {
+  font-size: 2.5rem;
+  color: #16a34a;
+  margin-bottom: 15px;
+}
+
+.vision-content .grid h3 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.vision-content .grid p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.mission-section {
+  margin-top: 40px;
+  padding: 30px;
+  background: #f9fafb;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.mission-section h2 {
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  color: #14532d;
+}
+
+.mission-section h3 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #166534;
+  font-weight: 600;
+}
+
+.mission-section p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #555;
+}
+
+/* =========================
+   Responsive Design
+========================= */
+@media (max-width: 1024px) {
+  .about {
+    padding: 60px 30px;
+  }
+
+  .navigation-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+
+  .message-president-content,
+  .message-ceo-footer {
+    gap: 30px;
+    padding: 25px;
+  }
+
+  .president-image,
+  .ceo-image {
+    width: 220px;
+    height: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about {
+    padding: 40px 15px;
+  }
+
+  .about h1 {
+    font-size: 2.5rem;
+  }
+
+  .navigation-cards {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .nav-card {
+    padding: 20px;
+  }
+
+  .nav-card h3 {
+    font-size: 1.3rem;
+  }
+
+  .message-president-content,
+  .message-ceo-footer {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .image-container {
+    margin-top: 0;
+    order: -1;
+  }
+
+  .president-image,
+  .ceo-image {
+    width: 200px;
+    height: 320px;
+  }
+
+  .management-image {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .policy-icon {
+    top: 20px;
+    left: 15px;
+    font-size: 2rem;
+  }
+
+  .vision-mission-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .vision-card,
+  .mission-card {
+    padding: 25px 20px;
+  }
+
+  .vision-card h3,
+  .mission-card h3 {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about {
+    padding: 30px 10px;
+  }
+
+  .about h1 {
+    font-size: 2rem;
+  }
+
+  .nav-card {
+    padding: 15px;
+  }
+
+  .nav-card h3 {
+    font-size: 1.2rem;
+  }
+
+  .message-president-content,
+  .message-ceo-footer {
+    padding: 15px;
+  }
+
+  .president-image,
+  .ceo-image {
+    width: 180px;
+    height: 280px;
+  }
+
+  .vision-card,
+  .mission-card {
+    padding: 20px 15px;
+  }
+
+  .vision-card h3,
+  .mission-card h3 {
+    font-size: 1.3rem;
+  }
+}
