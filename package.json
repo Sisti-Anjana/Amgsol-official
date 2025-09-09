@@ -8,10 +8,17 @@
     "start": "node server/index.js",
     "dev": "concurrently \"cd client && npm start\" \"cd server && npm run dev\""
   },
-  "keywords": ["AMG", "Solutions", "Full Stack"],
+  "keywords": [
+    "AMG",
+    "Solutions",
+    "Full Stack"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "concurrently": "^8.2.0"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
   }
 }
